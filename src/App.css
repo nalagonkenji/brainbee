@@ -3393,6 +3393,7 @@ body::before {
     linear-gradient(135deg, #b9efff 0%, #dbfbe3 32%, #fff0a8 66%, #ffd8ec 100%) !important;
   position: relative;
   overflow: hidden;
+  padding-bottom: 60px;
 }
 
 /* Auth screen scenic background */
@@ -5693,13 +5694,15 @@ textarea:focus {
    regardless of overflow:hidden on the parent fixed container */
 .auth-screen-footer {
   position: fixed;
-  bottom: 14px;
+  bottom: 0;
   left: 0;
   width: 100%;
   z-index: 5100;
   text-align: center;
   pointer-events: none;
   user-select: none;
+  padding-bottom: env(safe-area-inset-bottom, 8px);
+  background: transparent;
 }
 
 .auth-screen-footer .app-footer-divider {
