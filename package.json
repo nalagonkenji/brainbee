@@ -16,6 +16,7 @@
     "react-dom": "^19.2.5",
     "react-scripts": "5.0.1",
     "recharts": "^3.8.1",
+    "vosk-browser": "^0.0.8",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
