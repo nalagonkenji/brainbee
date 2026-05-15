@@ -1,4 +1,4 @@
-const BASE_URL = 'https://brainbee-backend.onrender.com/api';
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 // ── Helper ──────────────────────────────
 const getToken = () => localStorage.getItem('brainbee_token');
