@@ -1568,7 +1568,7 @@ useEffect(() => {
 
   if (savedUser && savedToken) {
     // ✅ Validate token with server before restoring session
-    fetch('http://localhost:5000/api/auth/me', {
+    fetch(`${process.env.REACT_APP_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/auth/me`, {
       headers: { 'Authorization': `Bearer ${savedToken}` },
     })
       .then(r => {
@@ -1710,7 +1710,7 @@ const handleLogin = async () => {
     }
     if (user.role === 'student') {
       // Fetch fresh user data to get latest nickname from DB
-      fetch(`http://localhost:5000/api/auth/me`, {
+      fetch(`${process.env.REACT_APP_API_URL?.replace('/api', '') || 'http://localhost:5000'}/api/auth/me`, {
         headers: { 'Authorization': `Bearer ${res.token}` }
       })
       .then(r => r.json())
