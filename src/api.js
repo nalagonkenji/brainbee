@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5000/api';
+const BASE_URL = 'https://brainbee-backend.onrender.com/api';
 
 // ── Helper ──────────────────────────────
 const getToken = () => localStorage.getItem('brainbee_token');
