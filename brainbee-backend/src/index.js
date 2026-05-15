@@ -15,6 +15,7 @@ app.use(cors({
   origin: [
     'http://localhost:3000',
     'https://brainbee-three.vercel.app',
+    'https://brainbee-kcc.vercel.app',
     'https://brainbee-9gdgnh2pq-nalagonkenji-9971s-projects.vercel.app'
   ],
   credentials: true,
