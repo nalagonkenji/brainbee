@@ -1,0 +1,493 @@
+/* ═══════════════════════════════════════════════════════════════
+   🐝 BrainBee — GameHelpHint.css
+   All classes namespaced with  ghh-  to avoid collisions.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Keyframes ──────────────────────────────────────────────── */
+
+@keyframes ghh-pop-in {
+  0%   { transform: scale(0) rotate(-20deg); opacity: 0; }
+  60%  { transform: scale(1.2) rotate(6deg);  opacity: 1; }
+  80%  { transform: scale(0.92) rotate(-3deg); }
+  100% { transform: scale(1) rotate(0deg);   opacity: 1; }
+}
+
+@keyframes ghh-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  45%       { transform: translateY(-7px) scale(1.04); }
+}
+
+@keyframes ghh-glow {
+  0%, 100% { box-shadow: 0 6px 20px rgba(255,107,53,0.45), 0 2px 6px rgba(0,0,0,0.2); }
+  50%       { box-shadow: 0 6px 20px rgba(255,107,53,0.45), 0 0 0 8px rgba(255,210,0,0.22), 0 2px 6px rgba(0,0,0,0.2); }
+}
+
+@keyframes ghh-shake {
+  0%, 100% { transform: translateX(0); }
+  18%       { transform: translateX(-6px); }
+  36%       { transform: translateX(6px); }
+  54%       { transform: translateX(-4px); }
+  72%       { transform: translateX(4px); }
+}
+
+@keyframes ghh-burst-flash {
+  0%   { filter: brightness(1); }
+  30%  { filter: brightness(2); }
+  100% { filter: brightness(1); }
+}
+
+@keyframes ghh-p0 { 0% { opacity:1; transform:translate(0,0) scale(1); } 100% { opacity:0; transform:translate(-40px,-52px) scale(0); } }
+@keyframes ghh-p1 { 0% { opacity:1; transform:translate(0,0) scale(1); } 100% { opacity:0; transform:translate( 42px,-54px) scale(0); } }
+@keyframes ghh-p2 { 0% { opacity:1; transform:translate(0,0) scale(1); } 100% { opacity:0; transform:translate(-52px, 6px) scale(0); } }
+@keyframes ghh-p3 { 0% { opacity:1; transform:translate(0,0) scale(1); } 100% { opacity:0; transform:translate( 48px, 8px) scale(0); } }
+@keyframes ghh-p4 { 0% { opacity:1; transform:translate(0,0) scale(1); } 100% { opacity:0; transform:translate(  2px,-64px) scale(0); } }
+
+@keyframes ghh-no-gold-drop {
+  0%   { transform: translateY(-14px) scale(0.88); opacity: 0; }
+  65%  { transform: translateY(4px)   scale(1.03); opacity: 1; }
+  100% { transform: translateY(0)     scale(1);    opacity: 1; }
+}
+
+@keyframes ghh-modal-in {
+  0%   { transform: translateY(44px) scale(0.9); opacity: 0; }
+  65%  { transform: translateY(-6px) scale(1.01); opacity: 1; }
+  100% { transform: translateY(0)   scale(1);    opacity: 1; }
+}
+
+@keyframes ghh-step-slide {
+  0%   { transform: translateX(-22px); opacity: 0; }
+  100% { transform: translateX(0);     opacity: 1; }
+}
+
+@keyframes ghh-bee-bob {
+  0%, 100% { transform: rotate(-4deg) translateY(0); }
+  50%       { transform: rotate(4deg)  translateY(-7px); }
+}
+
+@keyframes ghh-blob-drift {
+  0%, 100% { transform: translate(0, 0)     scale(1); }
+  50%       { transform: translate(10px, 8px) scale(1.09); }
+}
+
+/* ── Cluster (inline row — sits below game header, never overlaps gold) ── */
+
+.ghh-cluster {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  z-index: 80;
+  pointer-events: none;   /* let clicks pass through the container gap */
+}
+
+.ghh-cluster > *,
+.ghh-hint-wrapper {
+  pointer-events: auto;
+}
+
+/* ── Shared button base ─────────────────────────────────────── */
+
+.ghh-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  transition: transform 0.16s ease, filter 0.16s ease;
+  position: relative;
+  animation: ghh-pop-in 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+.ghh-btn:active:not(.ghh--disabled) {
+  transform: scale(0.86) !important;
+}
+
+.ghh-icon {
+  font-size: 24px;
+  line-height: 1;
+  display: block;
+}
+
+/* ── 💡 Hint button ─────────────────────────────────────────── */
+
+.ghh-hint-btn {
+  background: linear-gradient(135deg, #FFD93D 0%, #FF6B35 100%);
+  box-shadow: 0 6px 20px rgba(255,107,53,0.45), 0 2px 6px rgba(0,0,0,0.18);
+  animation:
+    ghh-pop-in 0.5s cubic-bezier(0.34,1.56,0.64,1) 0s both,
+    ghh-float  3s ease-in-out 0.8s infinite,
+    ghh-glow   3s ease-in-out 0.8s infinite;
+}
+
+.ghh-hint-btn:hover:not(.ghh--disabled) {
+  transform: scale(1.14) rotate(6deg);
+}
+
+.ghh-cost {
+  display: block;
+  font-size: 9px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.9);
+  margin-top: -2px;
+  line-height: 1;
+  letter-spacing: -0.2px;
+}
+
+.ghh-hint-btn .ghh-icon {
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.22));
+}
+
+/* ── ❓ Help button ─────────────────────────────────────────── */
+
+.ghh-help-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 6px 20px rgba(102,126,234,0.5), 0 2px 6px rgba(0,0,0,0.18);
+  animation:
+    ghh-pop-in 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.08s both,
+    ghh-float  3.3s ease-in-out 1s infinite;
+}
+
+.ghh-help-btn:hover {
+  transform: scale(1.14) rotate(-5deg);
+}
+
+.ghh-help-btn .ghh-icon {
+  font-size: 26px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.22);
+}
+
+/* ── Modifier states ────────────────────────────────────────── */
+
+.ghh--disabled {
+  filter: grayscale(0.55) brightness(0.8);
+  cursor: not-allowed;
+  animation: ghh-pop-in 0.5s cubic-bezier(0.34,1.56,0.64,1) both !important;
+}
+
+.ghh--broke {
+  filter: grayscale(0.3);
+}
+
+.ghh--shake {
+  animation: ghh-shake 0.5s ease-in-out !important;
+}
+
+.ghh--burst-flash {
+  animation: ghh-burst-flash 0.7s ease-out !important;
+}
+
+/* ── Hint wrapper + children ────────────────────────────────── */
+
+.ghh-hint-wrapper {
+  position: relative;
+}
+
+/* ── Gold burst particles ───────────────────────────────────── */
+
+.ghh-burst-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+  z-index: 90;
+}
+
+.ghh-particle {
+  position: absolute;
+  font-size: 17px;
+  animation-duration: 0.75s;
+  animation-timing-function: cubic-bezier(0.22,1,0.36,1);
+  animation-fill-mode: both;
+}
+
+.ghh-p0 { animation-name: ghh-p0; }
+.ghh-p1 { animation-name: ghh-p1; }
+.ghh-p2 { animation-name: ghh-p2; }
+.ghh-p3 { animation-name: ghh-p3; }
+.ghh-p4 { animation-name: ghh-p4; }
+
+/* ── "Not enough gold" tooltip ──────────────────────────────── */
+
+.ghh-no-gold {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  right: 0;
+  width: 188px;
+  background: linear-gradient(135deg, #2d1b69, #11998e);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  padding: 12px 14px;
+  border-radius: 16px;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.35);
+  animation: ghh-no-gold-drop 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+  z-index: 100;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.ghh-no-gold::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 18px;
+  border: 8px solid transparent;
+  border-top-color: #11998e;
+  border-bottom: 0;
+}
+
+.ghh-no-gold-icon {
+  font-size: 24px;
+}
+
+/* ── Modal backdrop ─────────────────────────────────────────── */
+
+.ghh-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 4, 26, 0.74);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* ── Modal card ─────────────────────────────────────────────── */
+
+.ghh-modal {
+  position: relative;
+  background: #fff;
+  border-radius: 28px;
+  width: 100%;
+  max-width: 420px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.38), 0 8px 24px rgba(0,0,0,0.2);
+  animation: ghh-modal-in 0.46s cubic-bezier(0.34,1.56,0.64,1) both;
+  --ghh-accent: #FF6B6B;
+}
+
+/* Decorative blobs */
+.ghh-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ghh-blob-a {
+  width: 170px;
+  height: 170px;
+  top: -55px;
+  left: -55px;
+  background: radial-gradient(circle, var(--ghh-accent) 0%, transparent 70%);
+  opacity: 0.1;
+  animation: ghh-blob-drift 8s ease-in-out infinite;
+}
+
+.ghh-blob-b {
+  width: 130px;
+  height: 130px;
+  bottom: -35px;
+  right: -35px;
+  background: radial-gradient(circle, var(--ghh-accent) 0%, transparent 70%);
+  opacity: 0.09;
+  animation: ghh-blob-drift 8s ease-in-out 4s infinite;
+}
+
+/* ── Modal header ───────────────────────────────────────────── */
+
+.ghh-modal-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 20px 16px;
+  border-radius: 28px 28px 0 0;
+  z-index: 1;
+}
+
+.ghh-header-bee {
+  font-size: 36px;
+  flex-shrink: 0;
+  animation: ghh-bee-bob 2.6s ease-in-out infinite;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.22));
+}
+
+.ghh-modal-title {
+  flex: 1;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.22);
+}
+
+.ghh-modal-x {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.28);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  transition: background 0.15s, transform 0.15s;
+}
+
+.ghh-modal-x:hover {
+  background: rgba(255,255,255,0.48);
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* ── Steps list ─────────────────────────────────────────────── */
+
+.ghh-steps {
+  list-style: none;
+  padding: 14px 16px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  overflow-y: auto;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.ghh-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #f6f5ff;
+  border-radius: 14px;
+  padding: 10px 14px;
+  border-left: 4px solid var(--ghh-accent);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  animation: ghh-step-slide 0.36s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+.ghh-step-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  line-height: 1;
+}
+
+.ghh-step-text {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #3a2f6e;
+  line-height: 1.45;
+}
+
+/* ── Hint tip ───────────────────────────────────────────────── */
+
+.ghh-hint-tip {
+  margin: 6px 16px 10px;
+  background: linear-gradient(135deg, #fff9e0, #fff3cc);
+  border: 2px solid #FFD93D;
+  border-radius: 14px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  z-index: 1;
+  position: relative;
+}
+
+.ghh-hint-tip-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.ghh-hint-tip p {
+  font-size: 13px;
+  font-weight: 600;
+  color: #7a5200;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ── CTA button ─────────────────────────────────────────────── */
+
+.ghh-cta {
+  margin: 0 16px 18px;
+  padding: 15px;
+  border: none;
+  border-radius: 18px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.12);
+  transition: transform 0.16s, box-shadow 0.16s;
+  z-index: 1;
+  position: relative;
+}
+
+.ghh-cta:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.25);
+}
+
+.ghh-cta:active {
+  transform: scale(0.96);
+}
+
+/* ── Mobile tweaks ──────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .ghh-cluster {
+    top: 10px;
+    right: 10px;
+    gap: 8px;
+  }
+
+  .ghh-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .ghh-icon { font-size: 20px; }
+  .ghh-help-btn .ghh-icon { font-size: 22px; }
+  .ghh-cost { font-size: 8px; }
+
+  .ghh-modal-title { font-size: 16px; }
+  .ghh-step-text   { font-size: 12.5px; }
+  .ghh-no-gold     { width: 168px; font-size: 12px; }
+}
+
+/* ── Ensure parent game screens are position:relative ───────── */
+/* (Add this to App.css if not already present)
+
+.math-game-screen,
+.english-game-screen {
+  position: relative;
+}
+*/
